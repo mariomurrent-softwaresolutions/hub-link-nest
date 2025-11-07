@@ -1,8 +1,12 @@
 import { useEffect } from 'react';
-import configData from '@/data/config.json';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export const useTheme = () => {
+  const { configData } = useConfig();
+  
   useEffect(() => {
+    if (!configData) return;
+    
     const { theme } = configData.config;
     const root = document.documentElement;
 
@@ -17,5 +21,5 @@ export const useTheme = () => {
       '--gradient-primary',
       `linear-gradient(135deg, hsl(${theme.primary}) 0%, hsl(${theme.accent}) 100%)`
     );
-  }, []);
+  }, [configData]);
 };

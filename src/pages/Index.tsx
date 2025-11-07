@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import LinkCard from "@/components/LinkCard";
-import configData from "@/data/config.json";
+import { useConfig } from "@/contexts/ConfigContext";
 import { useTheme } from "@/hooks/useTheme";
 
 interface Link {
@@ -22,14 +22,16 @@ interface Category {
 }
 
 const Index = () => {
+  const { configData, isLoading } = useConfig();
   useTheme();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const categories: Category[] = configData.categories;
-  const allLinks: Link[] = configData.links;
+  const categories: Category[] = configData?.categories || [];
+  const allLinks: Link[] = configData?.links || [];
 
   const filteredLinks = useMemo(() => {
+    if (!configData) return [];
     return configData.links.filter((link) => {
       const matchesSearch =
         searchQuery === "" ||
@@ -44,7 +46,7 @@ const Index = () => {
 
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategories, allLinks]);
+  }, [searchQuery, selectedCategories, configData]);
 
   const handleToggleCategory = (categoryId: string) => {
     setSelectedCategories((prev) =>
@@ -57,6 +59,22 @@ const Index = () => {
   const handleClearFilters = () => {
     setSelectedCategories([]);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
+        <p className="text-muted-foreground">Laden...</p>
+      </div>
+    );
+  }
+
+  if (!configData) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
+        <p className="text-muted-foreground">Fehler beim Laden der Konfiguration</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-subtle">

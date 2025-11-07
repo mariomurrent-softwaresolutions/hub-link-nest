@@ -1,8 +1,12 @@
 import * as Icons from "lucide-react";
 import { LucideIcon } from "lucide-react";
-import configData from "@/data/config.json";
+import { useConfig } from "@/contexts/ConfigContext";
 
 const Navbar = () => {
+  const { configData } = useConfig();
+  
+  if (!configData) return null;
+  
   const { companyName, companyTagline, welcomeMessage, logo } = configData.config;
   
   const getIcon = (iconName: string): LucideIcon => {
