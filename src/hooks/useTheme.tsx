@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import linksData from '@/data/links.json';
+import configData from '@/data/config.json';
 
 export const useTheme = () => {
   useEffect(() => {
-    const { theme } = linksData.config;
+    const { theme } = configData.config;
     const root = document.documentElement;
 
     // Apply theme colors from JSON to CSS variables

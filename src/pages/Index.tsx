@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import LinkCard from "@/components/LinkCard";
-import linksData from "@/data/links.json";
+import configData from "@/data/config.json";
 import { useTheme } from "@/hooks/useTheme";
 
 interface Link {
@@ -26,11 +26,11 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const categories: Category[] = linksData.categories;
-  const allLinks: Link[] = linksData.links;
+  const categories: Category[] = configData.categories;
+  const allLinks: Link[] = configData.links;
 
   const filteredLinks = useMemo(() => {
-    return allLinks.filter((link) => {
+    return configData.links.filter((link) => {
       const matchesSearch =
         searchQuery === "" ||
         link.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

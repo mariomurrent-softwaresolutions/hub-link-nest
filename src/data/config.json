@@ -3,6 +3,7 @@
     "companyName": "Firmen Intranet",
     "companyTagline": "Ihr digitaler Arbeitsplatz",
     "welcomeMessage": "Willkommen zurück!",
+    "logo": "Building2",
     "theme": {
       "primary": "217 91% 60%",
       "primaryForeground": "0 0% 100%",
