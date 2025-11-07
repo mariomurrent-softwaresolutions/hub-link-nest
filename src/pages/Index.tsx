@@ -4,6 +4,7 @@ import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import LinkCard from "@/components/LinkCard";
 import linksData from "@/data/links.json";
+import { useTheme } from "@/hooks/useTheme";
 
 interface Link {
   id: string;
@@ -21,6 +22,7 @@ interface Category {
 }
 
 const Index = () => {
+  useTheme();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 

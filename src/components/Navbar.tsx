@@ -1,6 +1,9 @@
 import { Building2 } from "lucide-react";
+import linksData from "@/data/links.json";
 
 const Navbar = () => {
+  const { companyName, companyTagline, welcomeMessage } = linksData.config;
+  
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
       <div className="container mx-auto px-6 py-4">
@@ -10,14 +13,14 @@ const Navbar = () => {
               <Building2 className="h-6 w-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Firmen Intranet</h1>
-              <p className="text-xs text-muted-foreground">Ihr digitaler Arbeitsplatz</p>
+              <h1 className="text-xl font-bold text-foreground">{companyName}</h1>
+              <p className="text-xs text-muted-foreground">{companyTagline}</p>
             </div>
           </div>
           
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground hidden sm:block">
-              Willkommen zurück!
+              {welcomeMessage}
             </span>
           </div>
         </div>
