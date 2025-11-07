@@ -1,0 +1,95 @@
+{
+  "categories": [
+    {
+      "id": "hr",
+      "name": "Personal & HR",
+      "icon": "Users"
+    },
+    {
+      "id": "it",
+      "name": "IT & Support",
+      "icon": "Laptop"
+    },
+    {
+      "id": "tools",
+      "name": "Tools & Software",
+      "icon": "Wrench"
+    },
+    {
+      "id": "docs",
+      "name": "Dokumentation",
+      "icon": "FileText"
+    },
+    {
+      "id": "communication",
+      "name": "Kommunikation",
+      "icon": "MessageSquare"
+    }
+  ],
+  "links": [
+    {
+      "id": "1",
+      "title": "Mitarbeiterportal",
+      "description": "Zugriff auf persönliche Daten, Urlaubsanträge und Gehaltsabrechnungen",
+      "url": "https://portal.example.com",
+      "image": "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=250&fit=crop",
+      "categories": ["hr"]
+    },
+    {
+      "id": "2",
+      "title": "IT-Helpdesk",
+      "description": "Support-Tickets erstellen und den Status Ihrer Anfragen verfolgen",
+      "url": "https://helpdesk.example.com",
+      "image": "https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=400&h=250&fit=crop",
+      "categories": ["it"]
+    },
+    {
+      "id": "3",
+      "title": "Microsoft 365",
+      "description": "Outlook, Teams, OneDrive und alle Office-Anwendungen",
+      "url": "https://office.com",
+      "image": "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=400&h=250&fit=crop",
+      "categories": ["tools", "communication"]
+    },
+    {
+      "id": "4",
+      "title": "Confluence Wiki",
+      "description": "Firmenwiki mit allen wichtigen Dokumentationen und Prozessen",
+      "url": "https://wiki.example.com",
+      "image": "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=400&h=250&fit=crop",
+      "categories": ["docs"]
+    },
+    {
+      "id": "5",
+      "title": "Jira",
+      "description": "Projektmanagement und Issue-Tracking für alle Teams",
+      "url": "https://jira.example.com",
+      "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=250&fit=crop",
+      "categories": ["tools"]
+    },
+    {
+      "id": "6",
+      "title": "Slack Workspace",
+      "description": "Team-Kommunikation und Collaboration in Echtzeit",
+      "url": "https://example.slack.com",
+      "image": "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=400&h=250&fit=crop",
+      "categories": ["communication"]
+    },
+    {
+      "id": "7",
+      "title": "Schulungsportal",
+      "description": "Online-Schulungen, Zertifikate und Weiterbildungsangebote",
+      "url": "https://learning.example.com",
+      "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop",
+      "categories": ["hr", "docs"]
+    },
+    {
+      "id": "8",
+      "title": "VPN Portal",
+      "description": "Sicherer Zugang zum Firmennetzwerk von unterwegs",
+      "url": "https://vpn.example.com",
+      "image": "https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop",
+      "categories": ["it"]
+    }
+  ]
+}
