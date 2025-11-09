@@ -1,0 +1,18 @@
+services:
+  hub-link-nest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hub-link-nest-local
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount custom config.json if you want to override the default
+      - ./public/config.json:/usr/share/nginx/html/config.json:ro
+    restart: unless-stopped
+    environment:
+      # These variables are built into the app during build time
+      # For local deployment, they can be empty or point to a dummy Supabase instance
+      - VITE_SUPABASE_URL=
+      - VITE_SUPABASE_PUBLISHABLE_KEY=
+      - VITE_SUPABASE_PROJECT_ID=

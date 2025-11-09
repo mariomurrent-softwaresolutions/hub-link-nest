@@ -60,6 +60,129 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Docker Deployment
+
+This project supports two deployment variants using Docker:
+
+### Option 1: Local Deployment with config.json
+
+This deployment uses the static `config.json` file for configuration without requiring Supabase.
+
+#### Prerequisites
+- Docker and Docker Compose installed
+
+#### Steps
+
+1. **Clone the repository**
+```sh
+git clone <YOUR_GIT_URL>
+cd <YOUR_PROJECT_NAME>
+```
+
+2. **Build and run with Docker Compose**
+```sh
+# For Docker Compose V2 (recommended)
+docker compose up -d
+
+# Or for Docker Compose V1
+docker-compose up -d
+```
+
+3. **Access the application**
+   - Open your browser and navigate to `http://localhost:8080`
+
+4. **Customize configuration (optional)**
+   - Edit `public/config.json` to customize company name, links, categories, and theme
+   - The changes will be reflected immediately due to the volume mount
+   - Restart the container if needed: `docker compose restart` (or `docker-compose restart`)
+
+5. **Stop the application**
+```sh
+# For Docker Compose V2
+docker compose down
+
+# Or for Docker Compose V1
+docker-compose down
+```
+
+### Option 2: Deployment with Supabase
+
+This deployment connects to a Supabase backend for dynamic configuration and admin features.
+
+#### Prerequisites
+- Docker and Docker Compose installed
+- Supabase project with configured database (see `supabase/migrations`)
+
+#### Steps
+
+1. **Clone the repository**
+```sh
+git clone <YOUR_GIT_URL>
+cd <YOUR_PROJECT_NAME>
+```
+
+2. **Configure Supabase credentials**
+   - Copy the example environment file:
+     ```sh
+     cp .env.example .env
+     ```
+   - Edit `.env` and fill in your Supabase credentials:
+     ```
+     VITE_SUPABASE_URL=https://your-project.supabase.co
+     VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-public-key
+     VITE_SUPABASE_PROJECT_ID=your-project-id
+     ```
+
+3. **Build and run with Docker Compose**
+```sh
+# For Docker Compose V2 (recommended)
+docker compose -f docker-compose.supabase.yml up -d
+
+# Or for Docker Compose V1
+docker-compose -f docker-compose.supabase.yml up -d
+```
+
+4. **Access the application**
+   - Open your browser and navigate to `http://localhost:8080`
+   - Admin interface available at `http://localhost:8080/admin`
+
+5. **Stop the application**
+```sh
+# For Docker Compose V2
+docker compose -f docker-compose.supabase.yml down
+
+# Or for Docker Compose V1
+docker-compose -f docker-compose.supabase.yml down
+```
+
+### Building Docker Image Manually
+
+If you prefer to build and run the Docker image manually:
+
+#### For local deployment:
+```sh
+docker build -t hub-link-nest .
+docker run -p 8080:80 -v $(pwd)/public/config.json:/usr/share/nginx/html/config.json:ro hub-link-nest
+```
+
+#### For Supabase deployment:
+```sh
+docker build \
+  --build-arg VITE_SUPABASE_URL=https://your-project.supabase.co \
+  --build-arg VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-public-key \
+  --build-arg VITE_SUPABASE_PROJECT_ID=your-project-id \
+  -t hub-link-nest-supabase .
+docker run -p 8080:80 hub-link-nest-supabase
+```
+
+### Deployment to Production
+
+For production deployments, consider:
+- Using a reverse proxy (nginx, Traefik, or Caddy) with SSL/TLS certificates
+- Setting up proper environment variables management
+- Configuring health checks and monitoring
+- Using orchestration platforms like Kubernetes or Docker Swarm for scaling
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!
