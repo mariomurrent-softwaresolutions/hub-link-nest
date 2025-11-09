@@ -8,36 +8,166 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useConfig } from "@/contexts/ConfigContext";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Trash2, Save } from "lucide-react";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { Plus, Trash2, Save, LogOut } from "lucide-react";
 
 const AdminDashboard = () => {
-  const { configData } = useConfig();
+  const { configData, refetch } = useConfig();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { isAdmin, isLoading: authLoading, logout } = useAdminAuth();
   const [config, setConfig] = useState(configData?.config);
   const [categories, setCategories] = useState(configData?.categories || []);
   const [links, setLinks] = useState(configData?.links || []);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!configData?.config.adminEnabled) {
       navigate("/admin");
+      return;
     }
-  }, [configData, navigate]);
+    
+    if (!authLoading && !isAdmin) {
+      navigate("/admin");
+    }
+  }, [configData, authLoading, isAdmin, navigate]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      if (!isAdmin) return;
+
+      try {
+        const { data: siteConfig } = await supabase
+          .from("site_config")
+          .select("*")
+          .single();
+
+        if (siteConfig) {
+          setConfig({
+            adminEnabled: configData?.config.adminEnabled,
+            companyName: siteConfig.company_name,
+            companyTagline: siteConfig.company_tagline,
+            welcomeMessage: siteConfig.welcome_message,
+            logo: siteConfig.logo,
+            theme: siteConfig.theme as any,
+          });
+        }
+
+        const { data: categoriesData } = await supabase
+          .from("categories")
+          .select("*")
+          .order("sort_order");
+
+        if (categoriesData) {
+          setCategories(categoriesData.map(cat => ({
+            id: cat.id,
+            name: cat.name,
+            icon: cat.icon,
+          })));
+        }
+
+        const { data: linksData } = await supabase
+          .from("links")
+          .select(`
+            *,
+            link_categories(category_id)
+          `);
+
+        if (linksData) {
+          setLinks(linksData.map(link => ({
+            id: link.id,
+            title: link.title,
+            description: link.description,
+            url: link.url,
+            image: link.image,
+            categories: (link as any).link_categories?.map((lc: any) => lc.category_id) || [],
+          })));
+        }
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    };
+
+    loadData();
+  }, [isAdmin, configData]);
 
   const handleSaveConfig = async () => {
+    if (!config) return;
+    
+    setIsSaving(true);
     try {
-      // TODO: Implement save to database via edge function
+      const { data: existing } = await supabase
+        .from("site_config")
+        .select("id")
+        .single();
+
+      const configPayload = {
+        company_name: config.companyName,
+        company_tagline: config.companyTagline,
+        welcome_message: config.welcomeMessage,
+        logo: config.logo,
+        theme: config.theme,
+      };
+
+      if (existing) {
+        await supabase
+          .from("site_config")
+          .update(configPayload)
+          .eq("id", existing.id);
+      } else {
+        await supabase
+          .from("site_config")
+          .insert(configPayload);
+      }
+
+      await supabase.from("categories").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+      
+      for (let i = 0; i < categories.length; i++) {
+        await supabase.from("categories").insert({
+          id: categories[i].id,
+          name: categories[i].name,
+          icon: categories[i].icon,
+          sort_order: i,
+        });
+      }
+
+      await supabase.from("link_categories").delete().neq("link_id", "00000000-0000-0000-0000-000000000000");
+      await supabase.from("links").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+
+      for (const link of links) {
+        await supabase.from("links").insert({
+          id: link.id,
+          title: link.title,
+          description: link.description,
+          url: link.url,
+          image: link.image,
+        });
+
+        if (link.categories && link.categories.length > 0) {
+          const linkCategories = link.categories.map(catId => ({
+            link_id: link.id,
+            category_id: catId,
+          }));
+          await supabase.from("link_categories").insert(linkCategories);
+        }
+      }
+
+      await refetch();
+      
       toast({
-        title: "Backend Required",
-        description: "Enable Lovable Cloud to save configuration changes",
-        variant: "destructive",
+        title: "Saved",
+        description: "Configuration saved successfully",
       });
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Save error:", error);
       toast({
         title: "Save Failed",
-        description: "Could not save configuration",
+        description: error.message || "Could not save configuration",
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -92,12 +222,16 @@ const AdminDashboard = () => {
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Admin Dashboard</h1>
           <div className="flex gap-2">
-            <Button onClick={handleSaveConfig} className="gap-2">
+            <Button onClick={handleSaveConfig} className="gap-2" disabled={isSaving}>
               <Save className="h-4 w-4" />
-              Save Changes
+              {isSaving ? "Saving..." : "Save Changes"}
             </Button>
             <Button variant="outline" onClick={() => navigate("/")}>
               View Site
+            </Button>
+            <Button variant="outline" onClick={logout} className="gap-2">
+              <LogOut className="h-4 w-4" />
+              Logout
             </Button>
           </div>
         </div>
