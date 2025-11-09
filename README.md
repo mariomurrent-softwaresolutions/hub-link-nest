@@ -35,10 +35,6 @@ Hub Link Nest is a centralized link management system designed for company intra
 
 You can try out Hub Link Nest with the default configuration. The demo includes sample links and categories to showcase the functionality.
 
-## Project info
-
-**URL**: https://lovable.dev/projects/c6a358d0-ce81-4012-9be7-cf702babf666
-
 ## Getting Started
 
 ### Prerequisites
@@ -90,10 +86,6 @@ Example `config.json` structure:
   "links": [...]
 }
 ```
-
-### Development with Lovable
-
-You can also edit this project using [Lovable](https://lovable.dev/projects/c6a358d0-ce81-4012-9be7-cf702babf666). Changes made via Lovable will be committed automatically to this repo.
 
 ## Technology Stack
 
@@ -239,11 +231,8 @@ For production deployments, consider:
 
 There are several ways to edit and maintain this application:
 
-**Use Lovable**
-Simply visit the [Lovable Project](https://lovable.dev/projects/c6a358d0-ce81-4012-9be7-cf702babf666) and start prompting. Changes made via Lovable will be committed automatically to this repo.
-
 **Use Your Preferred IDE**
-Clone this repo and push changes using your favorite IDE. Pushed changes will also be reflected in Lovable.
+Clone this repo and push changes using your favorite IDE.
 
 **Edit Directly in GitHub**
 - Navigate to the desired file(s)
@@ -256,21 +245,14 @@ Clone this repo and push changes using your favorite IDE. Pushed changes will al
 - Select the "Codespaces" tab
 - Click on "New codespace" to launch a new Codespace environment
 
-### Custom Domain
+## Acknowledgments
 
-Yes, you can connect a custom domain to your Lovable project!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project was bootstrapped with Lovable.
 
 ## License
-
-This project is part of the Lovable platform.
 
 ## Support
 
 For issues and questions:
 - Open an issue in this repository
-- Visit the [Lovable documentation](https://docs.lovable.dev)
 - Contact the development team
