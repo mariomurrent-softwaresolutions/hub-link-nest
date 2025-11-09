@@ -81,6 +81,10 @@ cd <YOUR_PROJECT_NAME>
 
 2. **Build and run with Docker Compose**
 ```sh
+# For Docker Compose V2 (recommended)
+docker compose up -d
+
+# Or for Docker Compose V1
 docker-compose up -d
 ```
 
@@ -90,10 +94,14 @@ docker-compose up -d
 4. **Customize configuration (optional)**
    - Edit `public/config.json` to customize company name, links, categories, and theme
    - The changes will be reflected immediately due to the volume mount
-   - Restart the container if needed: `docker-compose restart`
+   - Restart the container if needed: `docker compose restart` (or `docker-compose restart`)
 
 5. **Stop the application**
 ```sh
+# For Docker Compose V2
+docker compose down
+
+# Or for Docker Compose V1
 docker-compose down
 ```
 
@@ -127,6 +135,10 @@ cd <YOUR_PROJECT_NAME>
 
 3. **Build and run with Docker Compose**
 ```sh
+# For Docker Compose V2 (recommended)
+docker compose -f docker-compose.supabase.yml up -d
+
+# Or for Docker Compose V1
 docker-compose -f docker-compose.supabase.yml up -d
 ```
 
@@ -136,6 +148,10 @@ docker-compose -f docker-compose.supabase.yml up -d
 
 5. **Stop the application**
 ```sh
+# For Docker Compose V2
+docker compose -f docker-compose.supabase.yml down
+
+# Or for Docker Compose V1
 docker-compose -f docker-compose.supabase.yml down
 ```
 
