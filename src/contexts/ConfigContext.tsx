@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 interface Config {
+  adminEnabled?: boolean;
   companyName: string;
   companyTagline: string;
   welcomeMessage: string;

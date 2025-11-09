@@ -1,5 +1,6 @@
 {
   "config": {
+    "adminEnabled": false,
     "companyName": "Firmen Intranet",
     "companyTagline": "Ihr digitaler Arbeitsplatz",
     "welcomeMessage": "Willkommen zurück!",
