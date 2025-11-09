@@ -127,7 +127,7 @@ const Admin = () => {
           <CardHeader>
             <CardTitle>Admin Panel Disabled</CardTitle>
             <CardDescription>
-              The admin panel is currently disabled. To enable it, set "adminEnabled" to true in config.json and enable Lovable Cloud.
+              The admin panel is currently disabled. To enable it, set "adminEnabled" to true in config.json and enable Supabase integration.
             </CardDescription>
           </CardHeader>
           <CardContent>
