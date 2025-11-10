@@ -251,6 +251,10 @@ This project was bootstrapped with Lovable.
 
 ## License
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+The MIT License allows you to freely use, modify, and distribute this software, with the requirement that you include the original copyright and license notice in any copies or substantial portions of the software.
+
 ## Support
 
 For issues and questions:
