@@ -76,6 +76,7 @@ export type Database = {
           image: string
           title: string
           url: string
+          visibility: Database["public"]["Enums"]["link_visibility"]
         }
         Insert: {
           created_at?: string | null
@@ -84,6 +85,7 @@ export type Database = {
           image: string
           title: string
           url: string
+          visibility?: Database["public"]["Enums"]["link_visibility"]
         }
         Update: {
           created_at?: string | null
@@ -92,6 +94,7 @@ export type Database = {
           image?: string
           title?: string
           url?: string
+          visibility?: Database["public"]["Enums"]["link_visibility"]
         }
         Relationships: []
       }
@@ -164,6 +167,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      link_visibility: "public" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -292,6 +296,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      link_visibility: ["public", "admin"],
     },
   },
 } as const

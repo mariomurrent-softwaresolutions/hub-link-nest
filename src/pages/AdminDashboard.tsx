@@ -82,6 +82,7 @@ const AdminDashboard = () => {
             url: link.url,
             image: link.image,
             categories: (link as any).link_categories?.map((lc: any) => lc.category_id) || [],
+            visibility: (link as any).visibility || 'public',
           })));
         }
       } catch (error) {
@@ -142,6 +143,7 @@ const AdminDashboard = () => {
           description: link.description,
           url: link.url,
           image: link.image,
+          visibility: (link as any).visibility || 'public',
         });
 
         if (link.categories && link.categories.length > 0) {
@@ -200,6 +202,7 @@ const AdminDashboard = () => {
       url: "https://example.com",
       image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=250&fit=crop",
       categories: [],
+      visibility: 'public' as 'public' | 'admin',
     };
     setLinks([...links, newLink]);
   };
@@ -400,14 +403,27 @@ const AdminDashboard = () => {
                           }
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label>Image URL</Label>
-                        <Input
-                          value={link.image}
-                          onChange={(e) =>
-                            handleUpdateLink(link.id, "image", e.target.value)
-                          }
-                        />
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label>Image URL</Label>
+                          <Input
+                            value={link.image}
+                            onChange={(e) =>
+                              handleUpdateLink(link.id, "image", e.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Visibility</Label>
+                          <select
+                            value={(link as any).visibility || 'public'}
+                            onChange={(e) => handleUpdateLink(link.id, "visibility", e.target.value)}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            <option value="public">Public</option>
+                            <option value="admin">Admin Only</option>
+                          </select>
+                        </div>
                       </div>
                       <div className="flex justify-end">
                         <Button

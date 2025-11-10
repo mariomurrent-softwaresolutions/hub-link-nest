@@ -76,10 +76,16 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
 
       const { data: { session } } = await supabase.auth.getSession();
       
-      if (!session) {
-        setConfigData(jsonConfig);
-        setIsLoading(false);
-        return;
+      // Check if user is admin
+      let isAdmin = false;
+      if (session) {
+        const { data: roleData } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .eq('role', 'admin')
+          .maybeSingle();
+        isAdmin = !!roleData;
       }
 
       const { data: siteConfig } = await supabase
