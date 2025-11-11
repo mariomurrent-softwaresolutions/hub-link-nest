@@ -1,0 +1,116 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ companyName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ companyName }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading Hub Link Nest data...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <ion-icon name="alert-circle-outline" color="danger" size="large"></ion-icon>
+    <h2>Connection Error</h2>
+    <p>{{ error }}</p>
+    <ion-button (click)="retry()" color="primary">
+      <ion-icon slot="start" name="refresh-outline"></ion-icon>
+      Retry
+    </ion-button>
+    <div class="error-help">
+      <p><strong>Troubleshooting:</strong></p>
+      <ul>
+        <li>Make sure Hub Link Nest is running on http://localhost:5173</li>
+        <li>Check if you can access http://localhost:5173/config.json in your browser</li>
+        <li>Enable CORS if testing from different domains</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error" class="content-container">
+    <!-- Company Info -->
+    <div class="company-header">
+      <h1>{{ companyName }}</h1>
+      <p>{{ companyTagline }}</p>
+    </div>
+
+    <!-- Search Bar -->
+    <ion-searchbar
+      [(ngModel)]="searchQuery"
+      (ionInput)="onSearchChange($event)"
+      placeholder="Search links..."
+      animated="true"
+    ></ion-searchbar>
+
+    <!-- Category Filters -->
+    <div class="category-chips">
+      <ion-chip
+        *ngFor="let category of categories"
+        [color]="selectedCategory === category.id ? 'primary' : 'medium'"
+        (click)="onCategorySelect(category.id)"
+      >
+        <ion-label>{{ category.name }}</ion-label>
+      </ion-chip>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <ion-text color="medium">
+        Showing {{ filteredLinks.length }} of {{ allLinks.length }} links
+      </ion-text>
+    </div>
+
+    <!-- Links Grid -->
+    <div class="links-grid">
+      <ion-card *ngFor="let link of filteredLinks" class="link-card">
+        <img *ngIf="link.image" [src]="link.image" [alt]="link.title" />
+        <ion-card-header>
+          <ion-card-title>{{ link.title }}</ion-card-title>
+          <ion-card-subtitle>{{ link.description }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button expand="block" (click)="openLink(link.url)">
+            <ion-icon slot="start" name="open-outline"></ion-icon>
+            Open Link
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- No Results -->
+    <div *ngIf="filteredLinks.length === 0" class="no-results">
+      <ion-icon name="search-outline" size="large" color="medium"></ion-icon>
+      <h3>No links found</h3>
+      <p>Try adjusting your search or filters</p>
+    </div>
+
+    <!-- Test Info Footer -->
+    <div class="test-info">
+      <h3>Test Application Info</h3>
+      <p><strong>Purpose:</strong> This Ionic app tests the Hub Link Nest functionality</p>
+      <p><strong>Features Tested:</strong></p>
+      <ul>
+        <li>Configuration loading from config.json</li>
+        <li>Category display and filtering</li>
+        <li>Link search functionality</li>
+        <li>Responsive card layout</li>
+        <li>External link opening</li>
+      </ul>
+      <p><strong>Data Source:</strong> http://localhost:5173/config.json</p>
+    </div>
+  </div>
+</ion-content>
