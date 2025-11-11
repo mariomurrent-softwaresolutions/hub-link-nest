@@ -245,6 +245,30 @@ Clone this repo and push changes using your favorite IDE.
 - Select the "Codespaces" tab
 - Click on "New codespace" to launch a new Codespace environment
 
+## Testing
+
+### Ionic Test Application
+
+This repository includes an Ionic Angular test application that validates the Hub Link Nest functionality. The test app demonstrates:
+
+- Loading and displaying configuration from `config.json`
+- Category filtering and link search
+- Responsive mobile-optimized UI
+- Comprehensive unit tests
+
+**Quick Start:**
+```bash
+cd ionic-test-app
+npm install
+npm start
+```
+
+**Documentation:**
+- [Test App Quick Start](ionic-test-app/QUICK_START.md)
+- [Detailed Testing Guide](ionic-test-app/TESTING.md)
+
+The test application connects to the Hub Link Nest API and provides a mobile-friendly interface for testing all features on iOS and Android devices.
+
 ## Acknowledgments
 
 This project was bootstrapped with Lovable.
