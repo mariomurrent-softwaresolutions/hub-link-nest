@@ -7,6 +7,12 @@ interface Config {
   companyTagline: string;
   welcomeMessage: string;
   logo: string;
+  weather?: {
+    enabled: boolean;
+    latitude: number;
+    longitude: number;
+    cityName: string;
+  };
   theme: {
     primary: string;
     primaryForeground: string;
