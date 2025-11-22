@@ -5,6 +5,12 @@
     "companyTagline": "Ihr digitaler Arbeitsplatz",
     "welcomeMessage": "Willkommen zurück!",
     "logo": "Building2",
+    "weather": {
+      "enabled": true,
+      "latitude": 52.52,
+      "longitude": 13.405,
+      "cityName": "Berlin"
+    },
     "theme": {
       "primary": "217 91% 60%",
       "primaryForeground": "0 0% 100%",

@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import LinkCard from "@/components/LinkCard";
+import WeatherWidget from "@/components/WeatherWidget";
 import { useConfig } from "@/contexts/ConfigContext";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -81,6 +82,19 @@ const Index = () => {
       <Navbar />
       
       <main className="container mx-auto px-6 py-8">
+        {/* Weather Widget */}
+        {configData.config.weather?.enabled && (
+          <section className="mb-8 flex justify-end">
+            <div className="w-full sm:w-auto">
+              <WeatherWidget
+                latitude={configData.config.weather.latitude}
+                longitude={configData.config.weather.longitude}
+                cityName={configData.config.weather.cityName}
+              />
+            </div>
+          </section>
+        )}
+
         {/* Hero Section */}
         <section className="mb-12 text-center">
           <h2 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">
